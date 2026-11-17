@@ -1,0 +1,41 @@
+{
+  "id": "qianqian",
+  "name": "Qianqian Music",
+  "version": "1.0.0",
+  "minAppVersion": "0.1.20",
+  "main": "index.js",
+  "playback": "stream",
+  "permissions": {
+    "network": [
+      "api-qianqian.91q.com",
+      "api-qianqian.taihe.com",
+      "music.91q.com",
+      "*.91q.com",
+      "img01.dmhmusic.com",
+      "audio04.dmhmusic.com",
+      "*.dmhmusic.com"
+    ]
+  },
+  "settings": [
+    {
+      "key": "quality",
+      "label": "Quality",
+      "help": "Qianqian serves 128 kbps MP3, 320 kbps MP3, and FLAC without an account. FLAC sounds best and is the default; the app asks for a lower rate when picked here.",
+      "type": "select",
+      "options": [
+        { "value": "flac", "label": "FLAC" },
+        { "value": "320", "label": "MP3 320 kbps" },
+        { "value": "128", "label": "MP3 128 kbps" }
+      ]
+    }
+  ],
+  "navigation": [
+    { "builtin": "home" },
+    { "title": "Playlists", "page": "playlists", "icon": "list" },
+    { "title": "New albums", "page": "albums", "icon": "album" },
+    { "title": "Artists", "page": "artists", "icon": "artist" },
+    { "builtin": "liked", "title": "Liked songs" },
+    { "builtin": "savedAlbums", "title": "Saved albums" },
+    { "builtin": "stations", "title": "Stations" }
+  ]
+}
