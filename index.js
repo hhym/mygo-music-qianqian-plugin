@@ -202,7 +202,9 @@ function toTrack(x) {
     name,
     artists: artistList(x),
     duration: ms(x.duration),
-    unavailable: x.available === false,
+    // pay_model 3 is the paid / VIP catalogue: Qianqian answers with a format
+    // and a bitrate but no play url, with or without an account.
+    unavailable: Number(x.pay_model) === 3 || x.available === false,
     album: x.albumAssetCode
       ? {
           id: String(x.albumAssetCode),

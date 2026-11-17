@@ -69,6 +69,21 @@
 - 专辑 `albumAssetCode`：`P10004348672`。
 - 歌单 `id`：纯数字，如 `309746`。
 
+
+## 微信扫码登录能干什么（实测）
+
+网页端可以微信扫码登录（面板里「微信登录」→ `open.weixin.qq.com/connect/qrconnect?appid=wxde1ddeb8ea5bd75a`，scope `snsapi_login`，回调 `music.91q.com/?from=weixin`）。登录后顶部出现头像与「赫赫有鸣」这类昵称，说明会话成立。
+
+但**登录不改变播放**：
+
+- 付费/VIP 歌曲（`pay_model=3`）即使用账号登录、即使降到 `rate=128`，`/v1/song/tracklink` 也**只回 `format`/`rate`、不回 `path`**；只有真会员才给地址。
+- 免费歌曲（`pay_model=2` 或字段缺省）不登录一样能给到 FLAC。
+
+所以插件的策略是：把 `pay_model=3` 的曲目直接标成 **不可播放**（应用里会灰掉、点不动），而不是等到点播放才失败。
+插件本身也不保存登录态——音源插件是无状态的，装了就用的那份体验就是匿名体验。
+
+另外，扫码回调还踩过一次坑：回调页被重复打开会报 `web_weixin getAccessToken failed, code been used`，微信的 code 只能换一次 token，重登必须重新出二维码。
+
 ## 两个限制，别找不存在的接口
 
 - **没有排行榜。** 站点 `/rank`、`/billboard`、`/top`、`/ranklist` 全是 404（2600 字节的空页，没有 `window.__NUXT__`），`/v1/rank/*`、`/v1/billboard/*` 也不存在。千千现在做的是“场景音乐”，所以插件用 `/v1/index` 的今日歌曲 + 歌单列表顶上，不伪造榜单。
